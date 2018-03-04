@@ -84,7 +84,8 @@ class Youtube
      */
     public function getTitle()
     {
-        return str_replace([' ', '?', '/', '\\', '&'], '_', $this->info['title']);
+        $file_name = preg_replace( '/[^a-z0-9]+/', '-', strtolower( $this->info['title'] ) );
+        return str_replace([' ', '?', '/', '\\', '&'], '_', $file_name);
     }
 
     /**

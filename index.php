@@ -1,49 +1,39 @@
 <?php
-
+error_reporting(E_ALL);
+set_time_limit(120);
 $basedir = __DIR__ ."/";
 DEFINE('BASEDIR',$basedir);
 DEFINE('CLASSDIR',$basedir . "classes/");
 DEFINE('INCLUDEDIR',$basedir . "include/");
+DEFINE('VIDEODIR',$basedir . "videos/");
 
 require_once(INCLUDEDIR . "loader.php");
 
-$video_id = 'B7bqAsxee4I';
+$video_id = 'VnT7pT6zCcA';
 
-//$vfile = DownloadYTVideo($video_id);
+$vfile = GetYTAudio($video_id);
 if (@file_exists($vfile)){
     echo "File: " . $vfile;
 }else{ 
     @DebugOut($vfile,"Fehler");
 }
 
-$yt = new chopin2256\Youtube();  //Instantiate Youtube Object
-$yt->key(YTAPIKEY);  //Set Youtube API Key Here
 
-//Set Youtube Search Parameters
-$yt->set()->
-        q('ETW-FZ')->
-        maxResults(50)->
-        order('relevance')->
-        safeSearch('none')->
-        videoDuration('any')->
-        videoEmbeddable('true');
+//$results = SearchYoutube("Dotterbart");
+//DebugOut($results,"RESULTS");
 
-//Now get the Title and VideoIDS
-$num = count($yt->get()->id());  //Obtain number of results (taken from maxResults)
-
-$link ="";
-$ytIDArr = $yt->get()->id();  //Video ID array
-$ytTitleArr = $yt->get()->title();  //Title array
-for ($i = 0; $i < $num; $i++) {
-    $ytID = $ytIDArr[$i];
-    $ytTitle = $ytTitleArr[$i];
-    $results[$i]['id'] = $ytIDArr[$i];
-    $results[$i]['title']  = $ytTitleArr[$i];
-    //Your code here, for example, you can link to the youtube video results like so.  Ex:
-    $link .= "<a href='http://www.youtube.com/watch?v=$ytID'>$ytTitle</a><br>";
+function GetYTAudio($video_id){
+    $vidfile = DownloadYTVideo($video_id);
+    $audiofile = ExtractAudio($vidfile);
+    if ($audiofile) return $audiofile;
+    return false;
 }
-DebugOut($results,"RESULTS");
-echo "<hr>" . $link;
-$yt->clear();  //Clear query string, extremely important if iterating through multiple keywords!
 
+function ExtractAudio($videofile){   
+        $audiofile = $videofile . ".mp3";
+    	$FFmpeg = new FFmpeg(FFMPEG);
+    	$FFmpeg->input( $videofile )->output( $audiofile )->ready();
+        if (file_exists($audiofile)) return $audiofile;
+        return false;
+}
 
