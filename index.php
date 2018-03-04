@@ -9,9 +9,29 @@ DEFINE('VIDEODIR',$basedir . "videos/");
 
 require_once(INCLUDEDIR . "loader.php");
 
-$video_id = 'VnT7pT6zCcA';
+GetTelegrams();
 
-$vfile = GetYTAudio($video_id);
+function GetTelegrams(){
+    
+    $telegram = new Telegram\Bot\Api(TELEGRAM_BOT_TOKEN);
+    $response = $telegram->getUpdates(array('offset' => 303606306));
+    $resp = json_decode(json_encode($response), true);
+    DebugOut($resp,"RESP");
+    
+}
+
+
+
+
+
+
+
+/**
+ * 
+//ode $video_id = 'VnT7pT6zCcA';
+$video_id = 'B7bqAsxee4I';
+ 
+$vfile = GetYTAudio($video_id,true);
 if (@file_exists($vfile)){
     echo "File: " . $vfile;
 }else{ 
@@ -22,18 +42,5 @@ if (@file_exists($vfile)){
 //$results = SearchYoutube("Dotterbart");
 //DebugOut($results,"RESULTS");
 
-function GetYTAudio($video_id){
-    $vidfile = DownloadYTVideo($video_id);
-    $audiofile = ExtractAudio($vidfile);
-    if ($audiofile) return $audiofile;
-    return false;
-}
 
-function ExtractAudio($videofile){   
-        $audiofile = $videofile . ".mp3";
-    	$FFmpeg = new FFmpeg(FFMPEG);
-    	$FFmpeg->input( $videofile )->output( $audiofile )->ready();
-        if (file_exists($audiofile)) return $audiofile;
-        return false;
-}
-
+*/

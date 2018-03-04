@@ -2,6 +2,6 @@
 
 
 DEFINE('YTAPIKEY','MySuperCrazyYoutubeAPIKey');
-
+DEFINE('TELEGRAM_BOT_TOKEN','MeinTelegramBotTolen');
 
  
