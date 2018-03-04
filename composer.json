@@ -1,6 +1,6 @@
 {
     "require": {
-        "irazasyed/telegram-bot-sdk": "^2.0",
-        "olaferlandsen/ffmpeg-php-class": "^0.1.4"
+        "olaferlandsen/ffmpeg-php-class": "^0.1.4",
+        "mgp25/telegram-bot-api": "^1.1"
     }
 }
