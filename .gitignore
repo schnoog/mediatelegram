@@ -1,0 +1,4 @@
+include/config.php
+composer.lock
+videos/*
+/vendor/

@@ -1,0 +1,7 @@
+<?php
+
+
+DEFINE('YTAPIKEY','MySuperCrazyYoutubeAPIKey');
+
+
+ 
