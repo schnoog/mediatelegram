@@ -59,6 +59,7 @@ function YouTubeSearch($para,$chatID){
 */
 function GetYTAudio($video_id,$keepvid = false){
     $vidfile = GetYTVideo($video_id);
+    if(!file_exists($vidfile)) return false;
     $audiofile = GetExtractedAudio($vidfile);
     if(!$keepvid) unlink($vidfile);
     if ($audiofile) return $audiofile;
@@ -114,7 +115,7 @@ return $results;
 function GetYTVideo($video_id){
     $y =  new Smoqadam\Youtube();
     $url = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
-    $url .= $_SERVER["SERVER_NAME"];
+    $url .= @$_SERVER["SERVER_NAME"];
     if($y->init($video_id) !== false){
 
         $dlfile = $y->download();

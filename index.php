@@ -75,11 +75,11 @@ fclose($f);
                         break;
                       case '/ytvideo':
                             $exfile = GetYTVideo($para);
-                            SendSpecDocToChat($chatID,$exfile,true);                      
+                            if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);                      
                         break;
                       case '/ytaudio':
                             $exfile = GetYTAudio($para); 
-                            SendSpecDocToChat($chatID,$exfile,true);                      
+                            if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);                      
                         break;
 
                     }
@@ -95,12 +95,12 @@ fclose($f);
                     switch($callbackCMD){
                         case '/ytvideo':
                             $exfile = GetYTVideo($para);
-                            SendSpecDocToChat($chatID,$exfile,true);
+                            if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);
                             break;
                             
                         case '/ytaudio':
                             $exfile = GetYTAudio($para); 
-                            SendSpecDocToChat($chatID,$exfile,true);
+                            if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);
                             break;
                         
                         
