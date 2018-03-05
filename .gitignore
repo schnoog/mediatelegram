@@ -3,3 +3,4 @@ composer.lock
 videos/*
 /vendor/
 #atok
+telegram_loop.sh

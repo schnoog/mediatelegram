@@ -32,9 +32,9 @@ function YouTubeSearch($para,$chatID){
     $out .= $searchresults[$x]['id'] . " -- " . $searchresults[$x]['title'] . "\n";
     
     
-    $keys[$lc][] = array('text'=> "V:" . $searchresults[$x]['title']  ,'callback_data' => "/ytvideoCMD:" . $searchresults[$x]['id'] );
+    $keys[$lc][] = array('text'=> "\xF0\x9F\x8E\xA5" . $searchresults[$x]['title']  ,'callback_data' => "/ytvideoCMD:" . $searchresults[$x]['id'] );
     $lc++;
-    $keys[$lc][] = array('text'=> "A:" . $searchresults[$x]['title']  ,'callback_data' => "/ytaudioCMD:" . $searchresults[$x]['id'] );
+    $keys[$lc][] = array('text'=> "\xF0\x9F\x8E\xB5:" . $searchresults[$x]['title']  ,'callback_data' => "/ytaudioCMD:" . $searchresults[$x]['id'] );
     $lc++;
     //$keys[] = $key[$x];
    }
@@ -87,6 +87,8 @@ $yt->set()->
         videoEmbeddable('true');
 
 //Now get the Title and VideoIDS
+$alldata = $yt->get()->thumbnail();
+//DebugOut($alldata,"ALLDATA");
 $num = count($yt->get()->id());  //Obtain number of results (taken from maxResults)
 
 $link ="";
