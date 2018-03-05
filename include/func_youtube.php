@@ -27,13 +27,20 @@ function YouTubeSearch($para,$chatID){
    }
    $searchresults = SearchYoutube($para);
    $out ='';
+   $lc=0;
    for($x=0;$x<count($searchresults);$x++){
     $out .= $searchresults[$x]['id'] . " -- " . $searchresults[$x]['title'] . "\n";
-    $keys[] = array('xx'=>$searchresults[$x]['title'],'yy' => $searchresults[$x]['id'] );
+    
+    
+    $keys[$lc][] = array('text'=> "V:" . $searchresults[$x]['title']  ,'callback_data' => "/ytvideoCMD:" . $searchresults[$x]['id'] );
+    $lc++;
+    $keys[$lc][] = array('text'=> "A:" . $searchresults[$x]['title']  ,'callback_data' => "/ytaudioCMD:" . $searchresults[$x]['id'] );
+    $lc++;
+    //$keys[] = $key[$x];
    }
    if(strlen($out)>0){
-    $customKeyboard[] = $keys;
-    $reply_markup = InlineKeyboardMarkup($customKeyboard);
+    //$customKeyboard[] = $keys;
+    $reply_markup = InlineKeyboardMarkup($keys);
     $tg->sendMessage($chatID,"Search results",null,false,null,$reply_markup);
     
     
