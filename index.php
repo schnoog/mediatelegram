@@ -74,10 +74,12 @@ fclose($f);
                         TelegramTextMsg($chatID,$helptext);
                         break;
                       case '/ytvideo':
+                            TelegramWaitMsg($chatID);
                             $exfile = GetYTVideo($para);
                             if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);                      
                         break;
                       case '/ytaudio':
+                            TelegramWaitMsg($chatID);                      
                             $exfile = GetYTAudio($para); 
                             if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);                      
                         break;
@@ -94,11 +96,13 @@ fclose($f);
                     
                     switch($callbackCMD){
                         case '/ytvideo':
+                            TelegramWaitMsg($chatID);                        
                             $exfile = GetYTVideo($para);
                             if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);
                             break;
                             
                         case '/ytaudio':
+                            TelegramWaitMsg($chatID);                        
                             $exfile = GetYTAudio($para); 
                             if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);
                             break;

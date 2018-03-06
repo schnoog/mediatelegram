@@ -6,7 +6,12 @@ function TelegramTextMsg($chatID,$message){
     return true;
 }
 
-
+function TelegramWaitMsg($chatID){
+    global $tg;
+    $message = "Your request will be processed in a moment";
+    $tg->sendMessage($chatID,$message);
+    return true;
+}
 
 
 function InlineKeyboardMarkup($keyboard)

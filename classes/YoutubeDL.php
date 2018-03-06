@@ -54,7 +54,7 @@ class Youtube
         $this->info = $info;
 
         $url = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
-        $url .= $_SERVER["SERVER_NAME"];
+        $url .= @$_SERVER["SERVER_NAME"];
         $this->url = $url;
 
         $this->format = $format;
