@@ -1,5 +1,24 @@
 <?php
 
+
+function TelegramSendFiles($chat_id,$documents,$bolDeleteAfter = false){
+    if(!$documents)return false;
+    
+    if(!is_array($documents)) {
+        $docs[] = $documents;
+    }else{
+        $docs = $documents;
+    }
+    for($x=0;$x<count($docs);$x++){
+        if($x >0) sleep (1);
+        error_log("Uploading " . $docs[$x]);
+        SendSpecDocToChat($chat_id,$docs[$x],$bolDeleteAfter);
+    }
+    
+    
+}
+
+
 function TelegramTextMsg($chatID,$message){
     global $tg;
     $tg->sendMessage($chatID,$message);

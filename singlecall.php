@@ -13,8 +13,8 @@ DEFINE('VIDEODIR',$basedir . "videos/");
 
 require_once(INCLUDEDIR . "loader.php");
 
-DebugOut("START-----------","START");
-error_log("Singlecall " . time());
+DebugOut("START","START");
+//error_log("Singlecall " . time());
 $tg = new telegramBot(TELEGRAM_BOT_TOKEN);
 
 
@@ -31,18 +31,20 @@ $command=$_REQUEST['cmd'];
 $para=$_REQUEST['para'];
 $chatID=$_REQUEST['chatID'];
 }
-error_log("Command $command Parameter $para  chatID $chatID");
+//error_log("Command $command Parameter $para  chatID $chatID");
 switch($command){
 
                       case 'ytvideo':
                             
                             $exfile = GetYTVideo($para);
-                            if(file_exists($exfile)) {SendSpecDocToChat($chatID,$exfile,true);}else{TelegramBlockedMsg($chatID);}                      
+                            
+                            
+                            TelegramSendFiles($chatID,$exfile,true);                     
                         break;
                       case 'ytaudio':
                                                   
                             $exfile = GetYTAudio($para); 
-                            if(file_exists($exfile)) {SendSpecDocToChat($chatID,$exfile,true);}else{TelegramBlockedMsg($chatID);}                      
+                            TelegramSendFiles($chatID,$exfile,true);                    
                         break;
  
 } 

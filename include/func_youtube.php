@@ -63,20 +63,6 @@ function YouTubeSearch($para,$chatID){
    }
 }
 
-/**
- * GetYTAudio
- * Download the YT video and extract the audio as mp3 and returns the local path
- * Video file will be deleted until $keepvid is set to true
- * 
-*/
-function GetYTAudio($video_id,$keepvid = false){
-    $vidfile = GetYTVideo($video_id);
-    if(!file_exists($vidfile)) return false;
-    $audiofile = GetExtractedAudio($vidfile);
-    if(!$keepvid) unlink($vidfile);
-    if ($audiofile) return $audiofile;
-    return false;
-}
 
 /**
  * SearchYoutube
@@ -124,35 +110,63 @@ return $results;
  * 
  * 
 */
-function GetYTVideo($video_id){
+function GetYTVideo($video_id,$forceOneFile = false){
    $yt = new YouTubeDownloader();
    $videolist = $yt->getDownloadLinks("https://www.youtube.com/watch?v=" .$video_id,"mp4");
    DebugOut($videolist,"VL");
    $video['file'] = $videolist['0']['url'] ;
    $video['title'] = get_youtube_title($video_id);
    $video['filename'] =  preg_replace( '/[^a-z0-9]+/', '-', strtolower( $video['title'] ) ) . ".mp4"; 
-   
-   file_put_contents(VIDEODIR . $video['filename'] , fopen($video['file'], 'r'));
-   return VIDEODIR . $video['filename'];
+   if (substr($video['filename'],0,1)== "-") $video['filename'] = substr($video['filename'],1);
+   $vidfile = VIDEODIR . $video['filename'];
+   $viddir = VIDEODIR . "splitted/";
+   if(!file_exists($vidfile))  file_put_contents($vidfile , fopen($video['file'], 'r'));
+   if ($forceOneFile)return $vidfile;
+   $sizeOS = 52428800;
+   //$sizeOS = 1024000;
+   $resize = 50000;
+   //$resize = 1000;
+   if (filesize($vidfile)< $sizeOS){
+        return $vidfile;
+   }
+   //ok splitting it up
+   $mp4b = "mp4box";
+   $splitted = `$mp4b -splits $resize "$vidfile" -out "$viddir"`;
+   unlink($vidfile);
+//   error_log("$mp4b -splits $resize ".chr(32). $vidfile . chr(32) ." -out".chr(32). $viddir . chr(32));
+    $ans = substr($video['filename'],0,-4);
+    $len = strlen($ans);
+    $vidfiles = array();
+    if ($handle = opendir($viddir)) {
+        while (false !== ($entry = readdir($handle))) {
+            if ( substr($entry,0,$len) == $ans ) {
+                $vidfiles[] = $viddir .$entry;
+            }
+        }
+    closedir($handle);
+    return $vidfiles;
+    }
+   //$video['filename'] 
 
+
+
+   
 
 }
 //
 
-
-function GetYTVideoX($video_id){
-    $y =  new Smoqadam\Youtube();
-    $url = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
-    $url .= @$_SERVER["SERVER_NAME"];
-    if($y->init($video_id) !== false){
-
-        $dlfile = $y->download();
-        $dlfile = str_replace($url,BASEDIR , $dlfile); 
-    	$msg = "Download finished! \n".$y->download();
-        DebugOut($msg,"MSG");
-        return $dlfile;
-    }else{
-      	$msg = $y->getError();
-        return false;
-    }      
+/**
+ * GetYTAudio
+ * Download the YT video and extract the audio as mp3 and returns the local path
+ * Video file will be deleted until $keepvid is set to true
+ * 
+*/
+function GetYTAudio($video_id,$keepvid = false){
+    $vidfile = GetYTVideo($video_id,true);
+    if(!file_exists($vidfile)) return false;
+    $audiofile = GetExtractedAudio($vidfile);
+    if(!$keepvid) unlink($vidfile);
+    if ($audiofile) return $audiofile;
+    return false;
 }
+

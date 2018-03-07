@@ -1,12 +1,21 @@
 <?php
 
 /**
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
+/**
  * SINGLECALL
  * 
 */
 function SingleCall($chatID,$command,$para){
     $cmd = BASEDIR . "singlecall.php";// '$command' '$para' '$chatID'";
-    $tmp = `php -f "$cmd" "$command" "$para" "$chatID" &`;
+    $tmp = `nohup php -f "$cmd" "$command" "$para" "$chatID" > /dev/null 2>&1 &`;
     DebugOut($tmp,"phpout");
 }
 /**
