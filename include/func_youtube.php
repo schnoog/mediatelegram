@@ -144,6 +144,7 @@ function GetYTVideo($video_id,$forceOneFile = false){
             }
         }
     closedir($handle);
+    sort($vidfiles);
     return $vidfiles;
     }
    //$video['filename'] 
