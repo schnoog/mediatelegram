@@ -80,18 +80,20 @@ fclose($f);
                         $helptext = "Welcome to the MediaPoster Bot\n";
                         $helptext .= "Ever wanted an easy way to get Youtube videos or audio files?\n";
                         $helptext .= "You have made contact to the right bot.\n";
-                        $helptext .= "MediaPoster-Help\n\n/youtube <Searchterm> - Search for Youtube video\nFor each result two button will be available.\n";
+                        $helptext .= "MediaPoster-Help\n\n/youtube <Searchterm or Video-ID> - Search for Youtube video\nFor each result two button will be available.\n";
                         $helptext .= "One starting with \xF0\x9F\x8E\xA5 for Video, one with \xF0\x9F\x8E\xB5 for Audio\nClick the button and the selected video or audio file will be sent to you";
                         $helptext .= "\n/ytvideo <VideoID> - Get the mp4 video file sent via telegram\n";
                         $helptext .= "\n/ytaudio <VideoID> - Get the mp3 audio file sent via telegram\n";
+                        $helptext .= "\n\nBig video files will be splitted into smaller parts\n";
                         TelegramTextMsg($chatID,$helptext);
                         break; 
                       case '/help':
-                        $helptext = "MediaPoster-Help\n\n/youtube <Searchterm> - Search for Youtube video\nFor each result two button will be available.\n";
+                        $helptext = "MediaPoster-Help\n\n/youtube <Searchterm or Video-ID> - Search for Youtube video\nFor each result two button will be available.\n";
                         $helptext .= "One starting with \xF0\x9F\x8E\xA5 for Video, one with \xF0\x9F\x8E\xB5 for Audio\nClick the button and the selected video or audio file will be sent to you";
                         $helptext .= "\n/ytvideo <VideoID> - Get the mp4 video file sent via telegram\n";
                         $helptext .= "\n/ytaudio <VideoID> - Get the mp3 audio file sent via telegram\n";
-
+                        $helptext .= "\n\nBig video files will be splitted into smaller parts\n";
+                        
                         TelegramTextMsg($chatID,$helptext);
                         break;
                       case '/ytvideo':
