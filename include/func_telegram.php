@@ -13,6 +13,12 @@ function TelegramWaitMsg($chatID){
     return true;
 }
 
+function TelegramBlockedMsg($chatID,$hoster = "Youtube"){
+    global $tg;
+    $message = "Sorry, " . $hoster . " blocked the download of the file";
+    $tg->sendMessage($chatID,$message);
+    return true;
+}
 
 function InlineKeyboardMarkup($keyboard)
  {

@@ -1,6 +1,18 @@
 <?php
 
 
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+    function get_youtube_title($ref) {
+      $json = file_get_contents('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=' . $ref . '&format=json'); //get JSON video details
+      $details = json_decode($json, true); //parse the JSON into an array
+      return $details['title']; //return the video title
+    }
 
 /**
  * 
@@ -76,7 +88,6 @@ function SearchYoutube($querystring,$searchnum=10){
 $results = array();    
 $yt = new chopin2256\Youtube();  //Instantiate Youtube Object
 $yt->key(YTAPIKEY);  //Set Youtube API Key Here
-
 //Set Youtube Search Parameters
 $yt->set()->
         q($querystring)->
@@ -87,8 +98,7 @@ $yt->set()->
         videoEmbeddable('true');
 
 //Now get the Title and VideoIDS
-$alldata = $yt->get()->thumbnail();
-//DebugOut($alldata,"ALLDATA");
+$ytthumb = $yt->get()->thumbnail();
 $num = count($yt->get()->id());  //Obtain number of results (taken from maxResults)
 
 $link ="";
@@ -97,6 +107,7 @@ $ytTitleArr = $yt->get()->title();  //Title array
 for ($i = 0; $i < $num; $i++) {
     $ytID = $ytIDArr[$i];
     $ytTitle = $ytTitleArr[$i];
+    $ytThumb = $ytthumb[$i]['url'];
     $results[$i]['id'] = $ytIDArr[$i];
     $results[$i]['title']  = $ytTitleArr[$i];
     //Your code here, for example, you can link to the youtube video results like so.  Ex:
@@ -113,8 +124,23 @@ return $results;
  * 
  * 
 */
-
 function GetYTVideo($video_id){
+   $yt = new YouTubeDownloader();
+   $videolist = $yt->getDownloadLinks("https://www.youtube.com/watch?v=" .$video_id,"mp4");
+   DebugOut($videolist,"VL");
+   $video['file'] = $videolist['0']['url'] ;
+   $video['title'] = get_youtube_title($video_id);
+   $video['filename'] =  preg_replace( '/[^a-z0-9]+/', '-', strtolower( $video['title'] ) ) . ".mp4"; 
+   
+   file_put_contents(VIDEODIR . $video['filename'] , fopen($video['file'], 'r'));
+   return VIDEODIR . $video['filename'];
+
+
+}
+//
+
+
+function GetYTVideoX($video_id){
     $y =  new Smoqadam\Youtube();
     $url = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
     $url .= @$_SERVER["SERVER_NAME"];

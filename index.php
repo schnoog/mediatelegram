@@ -12,10 +12,31 @@ require_once(INCLUDEDIR . "loader.php");
 DebugOut("START","START");
 $tg = new telegramBot(TELEGRAM_BOT_TOKEN);
 
-
+//DebugOut($dbd,"DB");
 //YouTubeSearch("shortest video on youtube",549279974);
+
+
+
 GetTelegrams();
 
+/*
+$vid = 'vOTViwuzNZk';
+$vid = 'tPEE9ZwTmy0';  //shortest....
+echo "<hr>" . time() . "<br>";
+SingleCall('549279974','ytvideo',$vid);
+*/
+echo  time() . "<br>";
+
+//$vf = GetYTVideo($vid);
+//DebugOut($title,"TITLE");
+//$vid  = 'B7bqAsxee4I';
+
+//$yt = new YouTubeDownloader();
+//$videolist = $yt->getDownloadLinks("https://www.youtube.com/watch?v=" .$vid,"mp4");
+//$video['file'] = $videolist['0'];
+//$video['title'] = get_youtube_title($vid);
+//$video['filename'] =  preg_replace( '/[^a-z0-9]+/', '-', strtolower( $video['title'] ) ) . ".mp4";
+//DebugOut($vf,"VIDEO");
 //YouTubeSearch("dead parrot",549279974);
 
 /**
@@ -75,13 +96,11 @@ fclose($f);
                         break;
                       case '/ytvideo':
                             TelegramWaitMsg($chatID);
-                            $exfile = GetYTVideo($para);
-                            if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);                      
+                            SingleCall($chatID,'ytvideo',$para);                      
                         break;
                       case '/ytaudio':
-                            TelegramWaitMsg($chatID);                      
-                            $exfile = GetYTAudio($para); 
-                            if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);                      
+                            TelegramWaitMsg($chatID);
+                            SingleCall($chatID,'ytaudio',$para);                      
                         break;
 
                     }
@@ -97,17 +116,13 @@ fclose($f);
                     switch($callbackCMD){
                         case '/ytvideo':
                             TelegramWaitMsg($chatID);                        
-                            $exfile = GetYTVideo($para);
-                            if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);
+                            SingleCall($chatID,'ytvideo',$para);                      
                             break;
                             
                         case '/ytaudio':
                             TelegramWaitMsg($chatID);                        
-                            $exfile = GetYTAudio($para); 
-                            if(file_exists($exfile)) SendSpecDocToChat($chatID,$exfile,true);
+                            SingleCall($chatID,'ytaudio',$para);                      
                             break;
-                        
-                        
                         
                     }
                     

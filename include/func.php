@@ -1,9 +1,24 @@
 <?php
 
 /**
- * 
+ * SINGLECALL
  * 
 */
+function SingleCall($chatID,$command,$para){
+    $cmd = BASEDIR . "singlecall.php";// '$command' '$para' '$chatID'";
+    $tmp = `php -f "$cmd" "$command" "$para" "$chatID" &`;
+    DebugOut($tmp,"phpout");
+}
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+function isCommandLineInterface()
+{
+    return (php_sapi_name() === 'cli');
+}
 
 /**
  * GetExtractedAudio
