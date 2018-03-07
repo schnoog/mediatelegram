@@ -27,7 +27,7 @@ function TelegramTextMsg($chatID,$message){
 
 function TelegramWaitMsg($chatID){
     global $tg;
-    $message = "Your request will be processed in a moment";
+    $message = "Your request will be processed in a moment. Please wait....";
     $tg->sendMessage($chatID,$message);
     return true;
 }
