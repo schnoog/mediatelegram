@@ -1,10 +1,11 @@
 <?php
 
-//$YT_API_KEY = 'AIzaSyAbamiEUc90r5mUTVghRKTRAq_7PNOypgY';
+
 
 $MediaPoster_Key['MediaPoster']  =         'mkey';
 $MediaPoster_bot['DEV_MediaPoster'] =      'mkey';
 
+$Config['AdminID'] = "";
 
 $Config['Hook'] = array(
                     'use' => false,

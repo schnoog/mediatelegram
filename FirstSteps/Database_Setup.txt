@@ -1,0 +1,19 @@
+
+
+
+
+
+Additional to the structure.sql from vendor/longman, run the following 
+sql:
+
+**********************************************************************
+
+CREATE TABLE `mediaposter`.`mediaposter_searchcache` ( `id` INT NOT NULL 
+AUTO_INCREMENT , `service` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE 
+utf8mb4_general_ci NOT NULL , `searchstring` VARCHAR(1024) CHARACTER SET 
+utf8mb4 COLLATE utf8mb4_general_ci NOT NULL , `searchhash` VARCHAR(32) 
+NOT NULL , `searchresult` TEXT NOT NULL , `searchtimestamp` INT NOT NULL 
+, PRIMARY KEY (`id`), UNIQUE `uniquehash` (`searchhash`)) ENGINE = 
+InnoDB;
+
+***********************************************************************

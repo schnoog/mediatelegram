@@ -12,9 +12,14 @@ if(php_sapi_name() === 'cli' OR defined('STDIN')){
     $cli=true;
 }
 
+foreach (glob(DIR_FUNC . "*.php") as $filename)
+{
+    include_once $filename;
+}
 
 require DIR_BASE . '/vendor/autoload.php';
 require DIR_BASE . '/include/config.php';
+require_once DIR_FUNC   . "Youtube_SEARCH/Youtube.php";
 
 if (isset($Config['DB']['datasource'])){
     DB::$user       = $Config['DB']['datasource']['user'];
@@ -25,7 +30,3 @@ if (isset($Config['DB']['datasource'])){
     DB::$encoding   = 'utf8'; // defaults to latin1 if omitted
 }
 
-foreach (glob(DIR_FUNC . "*.php") as $filename)
-{
-    include_once $filename;
-}

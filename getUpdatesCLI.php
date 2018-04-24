@@ -24,7 +24,7 @@ try {
     $telegram->enableLimiter();
     
     $telegram->addCommandsPaths($commands_paths);
-    $telegram->enableAdmin(549279974);
+    $telegram->enableAdmin($Config['AdminID']);
     $telegram->setDownloadPath(__DIR__ . '/Download');
     $telegram->setUploadPath(__DIR__ . '/Upload');    
     

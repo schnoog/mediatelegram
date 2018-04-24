@@ -11,7 +11,7 @@ function Deb($data,$label=""){
     $out = '';
     if (strlen($label)>0){
         if($cli){
-            $out .= "****" . $label . "****" . $nl;
+            $out .= "+-+-+-+" . $label . "+-+-+-+" . $nl;
         }else{
             $out .= "<h2>" . $label . "</h2>";
         }
