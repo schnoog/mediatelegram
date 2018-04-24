@@ -21,12 +21,12 @@ require DIR_BASE . '/vendor/autoload.php';
 require DIR_BASE . '/include/config.php';
 require_once DIR_FUNC   . "Youtube_SEARCH/Youtube.php";
 
-if (isset($Config['DB']['datasource'])){
-    DB::$user       = $Config['DB']['datasource']['user'];
-    DB::$password   = $Config['DB']['datasource']['pass'];
-    DB::$dbName     = $Config['DB']['datasource']['name'];
-    DB::$host       = $Config['DB']['datasource']['host']; //defaults to localhost if omitted
-    DB::$port       = $Config['DB']['datasource']['port']; // defaults to 3306 if omitted
+if (isset($Config['DB']['telegram'])){
+    DB::$user       = $Config['DB']['telegram']['user'];
+    DB::$password   = $Config['DB']['telegram']['password'];
+    DB::$dbName     = $Config['DB']['telegram']['database'];
+    DB::$host       = $Config['DB']['telegram']['host']; //defaults to localhost if omitted
+  //  DB::$port       = $Config['DB']['telegram']['port']; // defaults to 3306 if omitted
     DB::$encoding   = 'utf8'; // defaults to latin1 if omitted
 }
 

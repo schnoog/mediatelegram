@@ -79,20 +79,21 @@ $cmd = str_replace("/","",$cmd);
                 return (new \Longman\TelegramBot\Commands\UserCommands\HelpCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
                 //return (new \Longman\TelegramBot\Commands\UserCommands\MenueCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
                 break;
-                                 
+            case 'mediadetail':
+                return (new \Longman\TelegramBot\Commands\UserCommands\MediadetailCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
+                //return (new \Longman\TelegramBot\Commands\UserCommands\MenueCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
+                break;                                 
         }
 
         if(substr($cmd,0,14) == 'command=fruits'){
                 return (new \Longman\TelegramBot\Commands\UserCommands\FruitsCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
         }
 
-        if(substr($cmd,0,10) == 'rlcommand='){
-                return (new \Longman\TelegramBot\Commands\UserCommands\RanglisteCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
+        if(substr($cmd,0,15) == 'command=results'){
+                return (new \Longman\TelegramBot\Commands\UserCommands\ResultsCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
         }
 
-        if(substr($cmd,0,10) == 'trcommand='){
-                return (new \Longman\TelegramBot\Commands\UserCommands\TourenCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
-        }        
+
 
 //        if ($callback_data)
 

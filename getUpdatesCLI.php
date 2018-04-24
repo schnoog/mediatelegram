@@ -35,7 +35,7 @@ try {
     if ($server_response->isOk()) {
         $update_count = count($server_response->getResult());
         $tmps =  date('Y-m-d H:i:s', time()) . ' - Processed ' . $update_count . ' updates';
-        Deb($server_response,$tmps);
+        //Deb($server_response,$tmps);
 
     } else {
         $tmps = date('Y-m-d H:i:s', time()) . ' - Failed to fetch updates' . PHP_EOL;

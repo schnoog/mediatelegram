@@ -56,7 +56,7 @@ class DevCommand extends UserCommand
             $text = 'Command usage: ' . $this->getUsage();
         }
 
-        $preout = SearchYoutube($text,10);
+        $preout = GetYoutubeSearchResults($text);
         $text = mdescape(br2nl(Deb($preout)));
 
 
