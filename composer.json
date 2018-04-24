@@ -5,6 +5,8 @@
         "php": ">=5.5",
 		"olaferlandsen/ffmpeg-php-class": "^0.1.4",
         "longman/telegram-bot": "*",
-		"athlon1600/youtube-downloader": "^1.0"
+		"athlon1600/youtube-downloader": "^1.0",
+		"sergeytsalkov/meekrodb": "*",
+        "php-telegram-bot/inline-keyboard-pagination": "*"
     }
 }

@@ -1,7 +1,34 @@
 <?php
 
+//$YT_API_KEY = 'AIzaSyAbamiEUc90r5mUTVghRKTRAq_7PNOypgY';
 
-DEFINE('YTAPIKEY','MySuperCrazyYoutubeAPIKey');
-DEFINE('TELEGRAM_BOT_TOKEN','MeinTelegramBotTolen');
+$MediaPoster_Key['MediaPoster']  =         'mkey';
+$MediaPoster_bot['DEV_MediaPoster'] =      'mkey';
 
- 
+
+$Config['Hook'] = array(
+                    'use' => false,
+                    'url' => "https://DOMAIN/hook.php",
+                );
+
+
+
+$Config['DB']['telegram'] = array(
+                    'host' => 'localhost',
+                    'user' => 'mediaposter',
+                    'password' => 'myverysecurepassword',
+                    'database' => 'mediaposter',
+                );                
+                
+$Config['Telegram'] = array(
+                    'token' => $MediaPoster_bot['DEV_MediaPoster'],
+                    'botname' => 'mediaposter',
+                );                
+
+$Config['seccode'] = 'some_security_key';                
+
+$Config['api'] = array(
+                    'youtube' => array('use' => true,'key' => 'YouTubeSearchAPIKey'),
+                    
+                    
+                );
