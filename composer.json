@@ -1,7 +1,10 @@
 {
+    "name": "schnoog/mediatelegram",
+    "type": "project",
     "require": {
-        "olaferlandsen/ffmpeg-php-class": "^0.1.4",
-        "mgp25/telegram-bot-api": "^1.1",
-        "athlon1600/youtube-downloader": "^1.0"
+        "php": ">=5.5",
+		"olaferlandsen/ffmpeg-php-class": "^0.1.4",
+        "longman/telegram-bot": "*",
+		"athlon1600/youtube-downloader": "^1.0"
     }
 }
