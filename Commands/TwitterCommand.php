@@ -18,22 +18,22 @@ use Longman\TelegramBot\Request;
  *
  * Simply echo the input back to the user.
  */
-class HelpCommand extends UserCommand
+class TwitterCommand extends UserCommand
 {
     /**
      * @var string
      */
-    protected $name = 'help';
+    protected $name = 'twitter';
 
     /**
      * @var string
      */
-    protected $description = 'Show the help';
+    protected $description = 'Download Twitter Video';
 
     /**
      * @var string
      */
-    protected $usage = '/help';
+    protected $usage = '/twitter <Twitter Video Url>';
 
     /**
      * @var string
@@ -52,23 +52,25 @@ class HelpCommand extends UserCommand
         $chat_id = $message->getChat()->getId();
         $text    = trim($message->getText(true));
 
-        $tx[] = "MediaTelegram";
-        $tx[] = "_Functions_";
-        $tx[] = "Easy Video/Audio download from YouTube";
-        $tx[] = '*Available commands*';
-        $tx[] = "/help ...hmmm let's guess";
-        $tx[] = "/youtube <searchterm>  Search Youtube video"; 
-        $tx[] = "/twitter <Link to Twitter Video>";
+        if ($text === '') {
+            $text = 'Command usage: ' . $this->getUsage();
+        }
 
-        $text = implode("\n",$tx);
+        $sendfile = GetTwitterVideo($text);
+        if(!$sendfile){
+            $data = [
+                'chat_id' => $chat_id,
+                'text'    => "No video file available, sorry",
+            ];
+            return Request::sendMessage($data);
+        }
 
-        $data = [
-            'chat_id' => $chat_id,
-            'text'    => $text,
-            'parse_mode' => 'MARKDOWN',
-            
-        ];
-
-        return Request::sendMessage($data);
+            $singleSend =   Request::sendDocument([
+                                    'caption'  => "Your file is ready",
+                                    'chat_id'  => $chat_id,
+                                    'document' => Request::encodeFile($sendfile),
+                            ]);
+            if(DELETE_AFTER) unlink($sendfile); 
+            return $singleSend;
     }
 }

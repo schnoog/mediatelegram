@@ -7,6 +7,7 @@
         "longman/telegram-bot": "*",
 		"athlon1600/youtube-downloader": "^1.0",
 		"sergeytsalkov/meekrodb": "*",
-        "php-telegram-bot/inline-keyboard-pagination": "*"
+        "php-telegram-bot/inline-keyboard-pagination": "*",
+        "norkunas/youtube-dl-php": "^1.0"
     }
 }

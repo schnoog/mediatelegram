@@ -16,12 +16,13 @@ if(php_sapi_name() === 'cli' OR defined('STDIN')){
     $cli=true;
 }
 
+require DIR_BASE . '/vendor/autoload.php';
 foreach (glob(DIR_FUNC . "*.php") as $filename)
 {
     include_once $filename;
 }
 
-require DIR_BASE . '/vendor/autoload.php';
+
 require DIR_BASE . '/include/config.php';
 require_once DIR_FUNC   . "Youtube_SEARCH/Youtube.php";
 
