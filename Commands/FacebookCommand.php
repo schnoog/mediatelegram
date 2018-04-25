@@ -64,13 +64,33 @@ class FacebookCommand extends UserCommand
             ];
             return Request::sendMessage($data);
         }
+        $dlfiles = GetMediaChunks($sendfile,$asmp3);
+        if(count($dlfiles)>0){
+            for($x=0;$x<count($dlfiles);$x++){
+                $file = $dlfiles[$x];
+                $capt = "Get your file";
+                if (count($dlfiles)>1) {
+                    $num = $x + 1;
+                    $capt .= "s" . "\n" . "Part " . $num . " of " . count($dlfiles);
+                    }
+                
+                
+                $singleSend =   Request::sendDocument([
+                                        'caption'  => $capt,
+                                        'chat_id'  => $chat_id,
+                                        'document' => Request::encodeFile($file),
+                                ]);
+                if(DELETE_AFTER) unlink($file);                   
+            }
+            return $singleSend;
+        }        
+    
 
-            $singleSend =   Request::sendDocument([
-                                    'caption'  => "Your file is ready",
-                                    'chat_id'  => $chat_id,
-                                    'document' => Request::encodeFile($sendfile),
-                            ]);
-            if(DELETE_AFTER) unlink($sendfile); 
+
+
+
+
+
             return $singleSend;
     }
 }
