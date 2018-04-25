@@ -4,7 +4,7 @@ include_once("bootstrap.php");
 
 $url = 'https://twitter.com/EmrgencyKittens/status/989098281862094848';
 
-$tmp = GetTwitterVideo($url);
+#$tmp = GetTwitterVideo($url);
 
 Deb($tmp,"RETURN");
 
