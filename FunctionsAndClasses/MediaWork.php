@@ -21,7 +21,8 @@ function GetMediaChunks($mediafile,$AsMP3 = false){
     if(!$AsMP3){    
     
     $resize = $Config['chunks']['maxsize'] * 1000;
-    $splitted = `MP4BOX -splits $resize "$mediafile" -out "$viddir"`;    
+    $mpb = MP4BOX;
+    $splitted = `$mpb -splits $resize "$mediafile" -out "$viddir"`;    
     if(DELETE_AFTER)unlink($mediafile);
     }
 
