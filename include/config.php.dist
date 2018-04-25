@@ -1,6 +1,6 @@
 <?php
 
-
+define("DELETE_AFTER",false);
 
 $MediaPoster_Key['MediaPoster']  =         'mkey';
 $MediaPoster_Key['DEV_MediaPoster'] =      'mkey';

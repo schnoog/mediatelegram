@@ -6,7 +6,7 @@ define("DIR_FUNC", DIR_BASE . "FunctionsAndClasses/");
 define("VIDEODIR", DIR_BASE . "videos/");
 define("SPLITDIR", VIDEODIR . "splitted/");
 
-define("DELETE_AFTER",false);
+
 error_reporting(E_ALL);
 
 $nl = "<br />";
