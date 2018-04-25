@@ -64,7 +64,7 @@ class FacebookCommand extends UserCommand
             ];
             return Request::sendMessage($data);
         }
-        $dlfiles = GetMediaChunks($sendfile,$asmp3);
+        $dlfiles = GetMediaChunks($sendfile,false);
         if(count($dlfiles)>0){
             for($x=0;$x<count($dlfiles);$x++){
                 $file = $dlfiles[$x];
