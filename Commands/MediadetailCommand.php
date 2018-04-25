@@ -12,6 +12,8 @@ namespace Longman\TelegramBot\Commands\UserCommands;
 
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\InlineKeyboard;
+use \Longman\TelegramBot\Entities\InlineKeyboardButton;
+
 use Longman\TelegramBot\Request;
 
 /**
@@ -60,19 +62,32 @@ class MediadetailCommand extends UserCommand
                     $files = GetYoutubeFiles($mediaid);
                     $out = mdescape(get_youtube_title($mediaid));
                     for($x=0;$x<count($files);$x++){
-                        $ilke[] = ['text' => $files[$x]['format'],];
-                        Deb($files[$x],"File: $x");
+                        $ilkeE[] = [['text' => $files[$x]['format'],'callback_data' => 'mediadownload '. $x ." ". $service . " " . $mediaid]];
+                        $tmp = new InlineKeyboardButton(['text' => $files[$x]['format'],'callback_data' => 'mediadownload '. $x ." ". $service . " " . $mediaid]);
+                        $ilke[] = $tmp;
+                        //Deb($files[$x],"File: $x");
+                    }
+                    if(count($files)>0){
+                        $tmp = new InlineKeyboardButton(['text' => 'MP3 Audio','callback_data' => 'mediadownload mp3 '. $service . " " . $mediaid]);
+                        $ilke[] = $tmp;
+                        
                     }
 
-                    $inline_keyboard = new InlineKeyboard($ilke);
+                    $max_per_row  = 2; // or however many you want!
+                    $per_row      = sqrt(count($ilke));
+                    $rows         = array_chunk($ilke, $per_row === floor($per_row) ? $per_row : $max_per_row);
+                    $reply_markup = new InlineKeyboard(...$rows);
                             $data = [
                                         'chat_id'      => $chat_id,
                                         'text'         => $out,
-                                        'reply_markup' => $inline_keyboard,
+                                        'reply_markup' => $reply_markup,
+                                        'one_time_keyboard' => true,
                                     ];
                     return Request::sendMessage($data);
                 break;
+            case "TeleTubbyTV":
             
+                break;            
             
             
             

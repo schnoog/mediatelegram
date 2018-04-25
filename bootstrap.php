@@ -3,6 +3,7 @@
 
 define("DIR_BASE",__DIR__ . "/");
 define("DIR_FUNC", DIR_BASE . "FunctionsAndClasses/");
+define("VIDEODIR", DIR_BASE . "videos/");
 
 
 $nl = "<br />";

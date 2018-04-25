@@ -1,4 +1,29 @@
 <?php
+
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
+function DownloadYTVideo($video_id,$selectedIndex){
+   $yt = new YouTubeDownloader();
+   $videolist = $yt->getDownloadLinks("https://www.youtube.com/watch?v=" .$video_id,"mp4");
+   $video['file'] = $videolist[$selectedIndex]['url'] ;
+   $video['title'] = get_youtube_title($video_id);
+   $video['filename'] =  preg_replace( '/[^a-z0-9]+/', '-', strtolower( $video['title'] ) ) . ".mp4"; 
+   if (substr($video['filename'],0,1)== "-") $video['filename'] = substr($video['filename'],1);
+   $vidfile = VIDEODIR . $video['filename'];
+   $viddir = VIDEODIR . "splitted/";
+   if(!file_exists($vidfile))  file_put_contents($vidfile , fopen($video['file'], 'r'));
+   if (file_exists($vidfile))return $vidfile;
+   return false;
+}
+
 /**
  * 
  * 
@@ -9,9 +34,7 @@
 function GetYoutubeFiles($video_id){
        $yt = new YouTubeDownloader();
        $videolist = $yt->getDownloadLinks("https://www.youtube.com/watch?v=" .$video_id,"mp4");
-       Deb($videolist,"VIDEOLIST");
        return $videolist;
-    
 }
 
 /**

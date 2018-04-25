@@ -82,7 +82,11 @@ $cmd = str_replace("/","",$cmd);
             case 'mediadetail':
                 return (new \Longman\TelegramBot\Commands\UserCommands\MediadetailCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
                 //return (new \Longman\TelegramBot\Commands\UserCommands\MenueCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
-                break;                                 
+                break;    
+            case 'mediadownload':
+                return (new \Longman\TelegramBot\Commands\UserCommands\MediadownloadCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
+                //return (new \Longman\TelegramBot\Commands\UserCommands\MenueCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
+                break;                                               
         }
 
         if(substr($cmd,0,14) == 'command=fruits'){
