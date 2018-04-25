@@ -19,16 +19,23 @@
 
 
 ##Installation
-1.  Create the target directory and cd into it
-2.  Clone this repo
+###Get the files
+#####Composer only
+`composer create-project schnoog/mediatelegram`
+#####Git & Composer
+-Create the target directory and cd into it
+-Clone this repo
 `git clone https://github.com/schnoog/mediatelegram.git .`
-3.  Install the composer depencies
+-Install the composer depencies
 `composer install`
-4.  Import the structure.sql delivered with telegram-bot
+
+###Prepare & Config
+
+1.  Import the structure.sql delivered with telegram-bot
 `./vendor/longman/telegram-bot/structure.sql`
-5.  Import the sql-Code mentioned in FirstSteps/Database_Setup.txt
+2.  Import the sql-Code mentioned in FirstSteps/Database_Setup.txt
 `./FirstSteps/Database_Setup.txt`
-6.  Create and edit the config.php
+3.  Create and edit the config.php
 `cp include/config.php.dist include/config.php`
 
 ##Usage
