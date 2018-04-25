@@ -7,6 +7,7 @@ define("VIDEODIR", DIR_BASE . "videos/");
 define("SPLITDIR", VIDEODIR . "splitted/");
 
 define("DELETE_AFTER",false);
+error_reporting(E_ALL);
 
 $nl = "<br />";
 $cli=false;

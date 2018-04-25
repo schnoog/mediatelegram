@@ -11,6 +11,7 @@
 
 
 function DownloadYTVideo($video_id,$selectedIndex){
+   Deb(array($video_id,$selectedIndex),"DL YT"); 
    $yt = new YouTubeDownloader();
    $videolist = $yt->getDownloadLinks("https://www.youtube.com/watch?v=" .$video_id,"mp4");
    $video['file'] = $videolist[$selectedIndex]['url'] ;
