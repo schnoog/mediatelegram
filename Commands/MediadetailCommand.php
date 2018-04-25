@@ -73,6 +73,15 @@ class MediadetailCommand extends UserCommand
                         
                     }
 
+                    $image = get_youtube_thumb($mediaid);
+                             $data = [
+                                        'chat_id'      => $chat_id,
+                                        'caption'         => $out,
+                                        'photo' => $image,
+                                    ];                   
+                    $det = Request::sendPhoto($data);
+                    $out = "Downloads";
+
                     $max_per_row  = 2; // or however many you want!
                     $per_row      = sqrt(count($ilke));
                     $rows         = array_chunk($ilke, $per_row === floor($per_row) ? $per_row : $max_per_row);
