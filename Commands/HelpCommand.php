@@ -59,6 +59,7 @@ class HelpCommand extends UserCommand
         $tx[] = "/help ...hmmm let's guess";
         $tx[] = "/youtube <searchterm>  Search Youtube video"; 
         $tx[] = "/twitter <Link to Twitter Video>";
+        $tx[] = "/misc <Link to Video - try it>";
 
         $text = implode("\n",$tx);
 
