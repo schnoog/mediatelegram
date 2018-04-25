@@ -36,6 +36,32 @@ function GetYoutubeFiles($video_id){
        $videolist = $yt->getDownloadLinks("https://www.youtube.com/watch?v=" .$video_id,"mp4");
        return $videolist;
 }
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+function GetYoutubeSearchID($searchstring){
+    global $Config;
+    $searchhash = md5("Youtube" . $searchstring);
+    return DB::queryFirstField("Select id from mediaposter_searchcache WHERE searchhash = %s AND searchtimestamp > %i ORDER by id",$searchhash, time()-$Config['api']['youtube']['maxage']);
+}
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+function GetYoutubeResultByID($id){
+    $res = DB::queryFirstRow("Select * from mediaposter_searchcache WHERE id = %i",$id);
+    if($res){
+        $out = json_decode($res['searchresult'],true);
+     return $out;
+    }
+}
 
 /**
  * 
@@ -58,8 +84,6 @@ function GetYoutubeSearchResults($searchstring){
         $results[$x]['thumb'] = get_youtube_thumb($results[$x]['id']);
         
     }
-    
-    
     $out = json_encode($results);
     DB::query("Delete from mediaposter_searchcache WHERE searchhash = %s",$searchhash);
     DB::query("Insert into mediaposter_searchcache (service,searchstring,searchhash,searchresult,searchtimestamp) VALUES (%s,%s,%s,%s,%i)",'Youtube',$searchstring,$searchhash,$out,time());

@@ -87,6 +87,10 @@ $cmd = str_replace("/","",$cmd);
                 return (new \Longman\TelegramBot\Commands\UserCommands\MediadownloadCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
                 //return (new \Longman\TelegramBot\Commands\UserCommands\MenueCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
                 break;                                               
+            case 'youtube':
+                return (new \Longman\TelegramBot\Commands\UserCommands\YoutubeCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
+                //return (new \Longman\TelegramBot\Commands\UserCommands\MenueCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
+                break; 
         }
 
         if(substr($cmd,0,14) == 'command=fruits'){
@@ -97,6 +101,9 @@ $cmd = str_replace("/","",$cmd);
                 return (new \Longman\TelegramBot\Commands\UserCommands\ResultsCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
         }
 
+        if(substr($cmd,0,15) == 'command=youtube'){
+                return (new \Longman\TelegramBot\Commands\UserCommands\YoutubeCommand($this->telegram, new \Longman\TelegramBot\Entities\Update($update)))->preExecute();
+        }
 
 
 //        if ($callback_data)
