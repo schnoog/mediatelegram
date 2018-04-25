@@ -4,7 +4,9 @@
 define("DIR_BASE",__DIR__ . "/");
 define("DIR_FUNC", DIR_BASE . "FunctionsAndClasses/");
 define("VIDEODIR", DIR_BASE . "videos/");
+define("SPLITDIR", VIDEODIR . "splitted/");
 
+define("DELETE_AFTER",false);
 
 $nl = "<br />";
 $cli=false;
@@ -31,3 +33,12 @@ if (isset($Config['DB']['telegram'])){
     DB::$encoding   = 'utf8'; // defaults to latin1 if omitted
 }
 
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+    $mp4box    = "mp4box.exe";
+    $ffmpegbin = "ffmpeg.exe";
+} else {
+    $mp4box    = "mp4box";
+    $ffmpegbin = "ffmpeg";
+}
+DEFINE('FFMPEG',$ffmpegbin);
+DEFINE('MP4BOX',$mp4box);

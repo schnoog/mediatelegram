@@ -18,15 +18,16 @@ class ResultsCommand extends UserCommand
     protected $version = '1.0.0';
     protected static $per_page = 8;
     public $ownmessage;
+    public $service = "";
 
 
-
-    public static function callbackHandler($text,$message)
+    public static function callbackHandler($text,$message,$service)
     {
         $params = InlineKeyboardPagination::getParametersFromCallbackData($text);
         if ($params['command'] !== 'results') {
             return null;
         }
+        
         $message_id = $message->getMessageId();
         $chat_id = $message->getChat()->getId();
         $data = [
@@ -36,7 +37,7 @@ class ResultsCommand extends UserCommand
         ];
 
         // Using pagination
-        if ($pagination = self::getInlineKeyboardPagination($params['newPage'],$message)) {
+        if ($pagination = self::getInlineKeyboardPagination($params['newPage'],$message,$service,$params['searchterm'])) {
             $data['text']         = 'Your results' ;
             $items = $pagination['items'];
             //$pagination['keyboard'][]= (array)(new InlineKeyboardButton(['text' => "blabla" , 'callback_data' => "bliblablub"]));
@@ -56,16 +57,14 @@ class ResultsCommand extends UserCommand
         return Request::editMessageText($data);
     }
 
-    public static function getResults($message)
+    public static function getResults($service,$searchtermB64)
     {
-        $out = array();
-        $user    = $message->getFrom();
-        $user_id = $user->getId();
-        $text   = $message->getText(true);
-        list($service,$serachstring) = explode(" ",$text,2);
+        Deb(array($service,$searchtermB64,urldecode($searchtermB64)),"Results input text");
+        $searchterm = urldecode($searchtermB64);
         switch ($service){
             case "Youtube":
-                $datax =  GetYoutubeSearchResults($serachstring);
+                $datax =  GetYoutubeSearchResults($searchterm);
+                
                         for($x=0;$x<count($datax);$x++){
                             $data = $datax[$x];
                             $txt = mdescape($data['title']) ;
@@ -78,21 +77,26 @@ class ResultsCommand extends UserCommand
                 break;            
             
         }
+        Deb($out,"Results");
         return $out;
     }
 
 
 
-    public static function getInlineKeyboardPagination($page = 1,$message)
+    public static function getInlineKeyboardPagination($page = 1,$message,$service,$searchtermB64)
     {
-        $results   = self::getResults($message);
+        $results   = self::getResults($service,$searchtermB64);
         if (empty($results)) {
             Deb("NO RESULTS");
             return null;
         }
+        Deb($service,"ILP Service");
+        
         // Define inline keyboard pagination.
         $ikp = new InlineKeyboardPagination($results, 'results', $page, self::$per_page);
-        $callback_data_format = 'command={COMMAND}&oldPage={OLD_PAGE}&newPage={NEW_PAGE}';
+
+        $callback_data_format = 'command={COMMAND}&oldPage={OLD_PAGE}&newPage={NEW_PAGE}&service=' . $service . '&searchterm=' .$searchtermB64;
+        Deb($callback_data_format,'$callback_data_format');
         $ikp->setCallbackDataFormat($callback_data_format);
         // If item count changes, take wrong page clicks into account.
         try {
@@ -109,21 +113,27 @@ class ResultsCommand extends UserCommand
         $this->ownmessage = $message;
         $chat_id = $message->getChat()->getId();
         $text    = trim($message->getText(true));
+        
+        Deb($text,"Execute input text");
+        if (stripos(" ". $text,"youtube")) $service = "Youtube";
         if(substr($text,0,15) == 'command=results'){
-            $this->callbackHandler($text,$message);
+            $this->callbackHandler($text,$message,$service);
             return true;
         }
 
-
+        $text   = str_replace("/results ","",$text);
+        $text   = str_replace("/youtube","Youtube",$text);
+        list($service,$serachstring) = explode(" ",$text,2);        
+        
         $data = [
             'chat_id' => $chat_id,
             'text'    => 'Empty',
         ];
 
-        if ($pagination = self::getInlineKeyboardPagination(1,$message)) {
+        if ($pagination = self::getInlineKeyboardPagination(1,$message,$service,urlencode($serachstring))) {
             $data['text'] = 'Deine Touren'; 
             $items = $pagination['items'];
-            Deb($items,"ITEMS");
+           // Deb($items,"ITEMS");
             
             for($x=0;$x<count($items);$x++){
                $lbl = $items[$x]['label'];
@@ -134,7 +144,7 @@ class ResultsCommand extends UserCommand
             $cb = "menue";
             $sub[] = [['text' => $lbl,'callback_data' => $cb]];
             $sub[] = $pagination['keyboard'];    
-            Deb($sub,"SUB");       
+            //Deb($sub,"SUB");       
             $data['reply_markup'] = [ 'inline_keyboard' => $sub ];
             $data['parse_mode'] = 'MARKDOWN';
         }

@@ -29,7 +29,19 @@ $Config['Telegram'] = array(
 $Config['seccode'] = 'some_security_key';                
 
 $Config['api'] = array(
-                    'youtube' => array('use' => true,'key' => 'YouTubeSearchAPIKey'),
+                    'youtube' => array( 'use' => true,
+                                        'key' => 'YourYouTubeAPIKey',
+                                        'maxage' => 3600
+                                        ),
                     
-                    
+                    'TeleTubbyTV' => array(
+                                        'use' => false,
+                                        'key' => 'no one',
+                                        'maxage' => '999999999'
+                                        ),   
                 );
+                
+$Config['chunks'] = array(
+                        'maxsize' => '50', //Max-File-Size for Upload in MB
+                    );
+              

@@ -58,24 +58,44 @@ class MediadownloadCommand extends UserCommand
         Deb($text,"TETX");
         list($cmd,$selectedfile,$service,$mediaid) = explode(" ",$text,4);
         $out = "Result";
+        $dlfiles = array();
         switch($service){
             case "Youtube":
                     
                     $out = mdescape(get_youtube_title($mediaid));
                     $selIndex = $selectedfile;
+                    $asmp3 = false;
                     if($selectedfile == "mp3"){
                         $selIndex = 0;
+                        $asmp3 = true;
                     }
                     $dlrow = DownloadYTVideo($mediaid,$selIndex);
-                    Deb($dlrow,"DLROW");
+                    $dlfiles = GetMediaChunks($dlrow,$asmp3);
+                    Deb($dlfiles,"DLROW");
 
                 break;
-            
-            
-            
-            
-            
         }
+
+        if(count($dlfiles)>0){
+            for($x=0;$x<count($dlfiles);$x++){
+                $file = $dlfiles[$x];
+                $capt = "Get your file";
+                if (count($dlfiles)>1) {
+                    $num = $x + 1;
+                    $capt .= "s" . "\n" . "Part " . $num . " of " . count($dlfiles);
+                    }
+                
+                
+                $singleSend =   Request::sendDocument([
+                                        'caption'  => $capt,
+                                        'chat_id'  => $chat_id,
+                                        'document' => Request::encodeFile($file),
+                                ]);
+                if(DELETE_AFTER) unlink($file);                   
+            }
+            return $singleSend;
+        }
+
 
 
         if($hasdownload){
