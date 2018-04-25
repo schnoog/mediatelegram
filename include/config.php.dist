@@ -3,7 +3,7 @@
 
 
 $MediaPoster_Key['MediaPoster']  =         'mkey';
-$MediaPoster_bot['DEV_MediaPoster'] =      'mkey';
+$MediaPoster_Key['DEV_MediaPoster'] =      'mkey';
 
 $Config['AdminID'] = "";
 
@@ -22,7 +22,7 @@ $Config['DB']['telegram'] = array(
                 );                
                 
 $Config['Telegram'] = array(
-                    'token' => $MediaPoster_bot['DEV_MediaPoster'],
+                    'token' => $MediaPoster_Key['DEV_MediaPoster'],
                     'botname' => 'mediaposter',
                 );                
 
